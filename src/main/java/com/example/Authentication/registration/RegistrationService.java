@@ -26,7 +26,8 @@ public class RegistrationService {
         if (!isValidEmail) {
             throw new IllegalStateException("Email is not valid");
         }
-        return appUserService.signUpUser(
+
+        String token = appUserService.signUpUser(
                 new AppUser(
                         request.getFirstName(),
                         request.getLastName(),
@@ -43,6 +44,7 @@ public class RegistrationService {
 
         return token;
     }
+
     @Transactional
     public String confirmToken(String token) {
         ConfirmationToken confirmationToken = confirmationTokenService.getToken(token).orElseThrow(()-> new IllegalStateException("Token not found"));
